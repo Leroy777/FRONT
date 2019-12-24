@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState , Fragment} from 'react';
+import { Container } from 'semantic-ui-react';
 
-const news = () => {
-    return (
-        <div>news</div>
-    );
-}
+const news = () => (
+    <Fragment>
+        <Container>
+            News from Semantic
+        </Container>
+    </Fragment>
+);
+
 export default news;

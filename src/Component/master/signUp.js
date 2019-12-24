@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
+import BottomBar from '../Fragments/BottomBar';
+import SignUpForm from '../Fragments/SignUpForm';
 
-const signUp = () => {
-    return (
-        <div>signUP</div>
-    );
-}
+const signUp = () => (
+    <Fragment>
+        <SignUpForm/>
+        <BottomBar />
+    </Fragment>
+);
 export default signUp;
