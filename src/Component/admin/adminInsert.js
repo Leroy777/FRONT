@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { Fragment } from 'react';
+import AdminSelector from '../adminFragments/AdminSelector';
 
-const adminInsert = () => {
-    return (
-        <div>adminInsert</div>
-    );
-}
+const adminInsert = () => (
+    <Fragment>
+        <AdminSelector />
+    </Fragment>
+);
 export default adminInsert;

@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
-import BasicForm from '../Fragments/BasicForm';
+import SignInForm from '../Fragments/SignInForm';
 import BottomBar from '../Fragments/BottomBar';
 
 const signIn = () => (
     <Fragment>
-        <BasicForm />
+        <SignInForm />
         <BottomBar />
     </Fragment>
     

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   Form,
@@ -12,7 +12,17 @@ import {
 } from 'semantic-ui-react';
 
 
-export default () => (
+const SignInForm = () => {
+    const [authenticated, setAuthenticated] = useState(false);
+    const [auth, setAuth] = useState({
+        email: '',
+        password: '',
+        error: '',
+        loading: false,
+        redirecting: false
+    });
+
+    return(
     <Container>
         <Grid.Row>
             <Grid.Row>
@@ -33,6 +43,7 @@ export default () => (
                             icon="user"
                             iconPosition="left"
                             placeholder="Email address"
+                            required
                         />
                         <Form.Input
                             fluid
@@ -40,6 +51,7 @@ export default () => (
                             iconPosition="left"
                             placeholder="Password"
                             type="password"
+                            required
                         />
                         <Button color="blue" fluid size="large">
                             Login
@@ -54,8 +66,14 @@ export default () => (
                 <Message>
                     Not registered yet? <a href="/signup">Sign Up</a>
                 </Message>
+                <Message>
+                    Forgot Password? <a href="/forgot_password">Let Us Know</a>
+                </Message>
                 </Grid.Column>
             </Grid>
         </Grid.Row>
     </Container>
-);
+    )
+};
+
+export default SignInForm;

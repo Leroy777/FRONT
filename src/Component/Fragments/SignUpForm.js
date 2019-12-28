@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Button,
   Form,
@@ -11,7 +11,74 @@ import {
   Popup,
 } from 'semantic-ui-react';
 
-export default () => (
+const SignUpForm = () => {
+    const [collection, setCollection] = useState({
+        fname: '',
+        lname: '',
+        email: '',
+        birthdate: '',
+        passcode: '',
+        confirm: '',
+        success: false
+    });
+    
+    const [problem, setProblem] = useState(0);
+    const [checkerMsg, setCheckerMsg] = useState('');
+
+    const handleChange = name => event => { //simply sets the states using input value as user types
+        setCollection({...collection, [name]: event.target.value})
+    };
+
+    const handleClick = (event) => { // check if the form elements are okay
+        let goto_field = 0;
+        var {fname, lname, email, birthdate, passcode, confirm, success} = collection;
+        if (fname.length > 60 || lname.length > 60) {
+            goto_field = 1
+        } else if (!email.includes('@') || !email.includes('.')) {
+            goto_field = 2
+        } else if (passcode !== confirm) {
+            goto_field = 3
+        } else if (passcode.length < 6){
+            goto_field = 4
+        } else {
+            goto_field = 0
+        }
+        if (goto_field === 0){
+            setProblem(goto_field)
+            setCheckerMsg('')
+        } else {
+            setProblem(goto_field)
+        }
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        if (checkerMsg === ''){
+            console.log('do something')
+        }
+    }
+
+    useEffect(()=>{ // mostly checks error and updates checkerMsg
+        if (problem !== 0){
+            console.log('has issues ' + problem)
+            switch(problem){
+                case 1: 
+                    setCheckerMsg('name too long !!!')
+                    break
+                case 2: 
+                    setCheckerMsg('invalid email format !!!')
+                    break
+                case 4:
+                    setCheckerMsg('password needs to be at least 6 characters long !!!')
+                    break
+                default: 
+                    setCheckerMsg('passwords do not match !!!')
+                    break
+            }
+        }
+    })
+
+    return(
     <Container>
         <Grid.Row>
             <Grid.Row>
@@ -26,13 +93,22 @@ export default () => (
                     Sign Up Today
                 </Header>
                 <Segment>
-                    <Form size="large">
+                    <Form size="large" onSubmit = {handleSubmit} >
                         <Form.Input 
                             fluid
                             icon="address book"
                             iconPosition="left"
-                            placeholder="Full name"
+                            placeholder="First name"
                             required
+                            onChange = {handleChange('fname')}
+                        />
+                        <Form.Input 
+                            fluid
+                            icon="address book outline"
+                            iconPosition="left"
+                            placeholder="Last name"
+                            required
+                            onChange = {handleChange('lname')}
                         />
                         <Form.Input
                             fluid
@@ -40,6 +116,7 @@ export default () => (
                             iconPosition="left"
                             placeholder="Email address - (this is your username)"
                             required
+                            onChange = {handleChange('email')}
                         />
                         <Form.Input
                             fluid
@@ -48,6 +125,7 @@ export default () => (
                             placeholder="Password"
                             type="password"
                             required
+                            onChange = {handleChange('passcode')}
                         />
                         <Form.Input
                             fluid
@@ -56,6 +134,7 @@ export default () => (
                             placeholder="please confirm your password"
                             type="password"
                             required
+                            onChange = {handleChange('confirm')}
                         />
                         <Popup
                             trigger={
@@ -66,16 +145,20 @@ export default () => (
                                     placeholder="birthdate"
                                     type="date"
                                     required
+                                    onChange = {handleChange('birthdate')}
                                 />
                             }
                             content="please tell us your real birthdate, so we can suggest the right product to you"
                         />
-                        <Button color="blue" fluid size="large">
+                        <Button color="blue" fluid size="large" onClick={handleClick}>
                             Sign Up
                         </Button>
                         <br />
                     </Form>
                 </Segment>
+                <Message >
+                    <h3 style={{color:'red'}}>{checkerMsg}</h3>
+                </Message>
                 <Message>
                     Already a Member? <a href="/signin">Sign In</a>
                 </Message>
@@ -83,4 +166,7 @@ export default () => (
             </Grid>
         </Grid.Row>
     </Container>
-);
+    );
+};
+
+export default SignUpForm;

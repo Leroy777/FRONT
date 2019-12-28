@@ -12,7 +12,7 @@ export default () => (
         <Grid.Row style={{height:'100px'}}></Grid.Row>
         <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '0em 0em'}}>
                 <Grid.Row><br /></Grid.Row>
-                <Header as='h2' textAlign='center' textColor='white'>
+                <Header as='h2' textAlign='center'>
                     About Easy-to-Buy
                 </Header>
                 <Grid divided inverted stackable>
@@ -42,7 +42,7 @@ export default () => (
                         </List>
                     </Grid.Column>
                     <Grid.Column width={4}>
-                        <Header inverted as='h4' content='A Vancouver-Based Company' textColor='white'/>
+                        <Header inverted as='h4' content='A Vancouver-Based Company'/>
                         <p>
                             We sell...
                         </p>
