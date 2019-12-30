@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Dropdown, Container, Grid, Divider, Segment, Header } from 'semantic-ui-react';
-import {AdminInsertSwitch, AdminInsertMapper} from '../../ClassSupport/AdminInsertSwitch';
+import {Dropdown, Container, Divider, Segment, Header } from 'semantic-ui-react';
+import {AdminInsertSwitch} from '../../ClassSupport/AdminInsertSwitch';
 
 const adminOptions = [
     {
@@ -47,12 +47,15 @@ const adminOptions = [
 
 const AdminSelector = () =>{
     const [sel, setSel] = useState('');
-    const [activeForm, setActiveForm] = useState(null);
-    const value = sel;
+    var value = sel;
     const handleChange = (e, {value}) => {
         setSel(value);
-        setActiveForm(AdminInsertSwitch(value));
     };
+
+    useEffect(()=>{
+        AdminInsertSwitch(value);
+    })
+
     return (
         <Container textAlign='center'>
             <Divider clearing />
@@ -73,11 +76,11 @@ const AdminSelector = () =>{
                     <Header as='h3'>{value}</Header>
                 </Segment>
                 <Segment>
-                    <AdminInsertMapper />
+                    <p></p>
                 </Segment>
             </Segment.Group>
         </Container>
     );
 };
-
+//{<AdminInsertMapper />}
 export default AdminSelector;

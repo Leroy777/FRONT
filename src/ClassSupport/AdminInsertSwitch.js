@@ -1,51 +1,51 @@
-import React, {useState, useEffect} from 'react';
-import { Form, Button } from "semantic-ui-react";
+import React from 'react';
+import { Form, Divider, Button } from "semantic-ui-react";
 
-export const AdminInsertSwitch = (key) => {
+export const AdminInsertSwitch = key => {
+    let current = null; //refresh and re-init current 
     switch(key){
         case 'add_category':
-            return ['category'];
+            current = ['category'];
+            break;
         case 'delete_category':
-            return ['category']
+            current = ['category'];
+            break;
         case 'add_product':
-            return ['title', 'category', 'descr', 'price']
+            current = ['title', 'category', 'descr', 'price'];
+            break;
         case 'update_product':
-            return ['product_id', 'instock', 'promo']
+            current = ['product_id', 'instock', 'promo'];
+            break;
         case 'delete_product':
-            return ['product_id']
+            current = ['product_id'];
+            break;
         case 'add_promotion':
-            return ['title', 'type', 'image', 'descr', 'offer_ends']
+            current = ['title', 'type', 'image', 'descr', 'offer_ends'];
+            break;
         case 'delete_promotion':
-            return ['promotion_id']
+            current = ['promotion_id'];
+            break;
         case 'order_status':
-            return ['trans_id', 'process_status']
+            current = ['trans_id', 'process_status'];
+            break;
         default:
             break;
     }
+    console.log(`current = ${current} with type of ${typeof(current)}`);
+    AdminInsertMapper(current);
 }
+
 export const AdminInsertMapper = property => {
-    console.log(`active: ${JSON.stringify(property)}`);
-    return (null
-        /*<Form>
-            {list.map(
-                k => (
-                    <Form.Input key={k}>{item.get(k)}</Form.Input>
-                )
-            )}
-            <Button>Commit</Button>
-        </Form>*/
-    );    
+    console.log(`hint: ${JSON.stringify(property)} with typeof ${typeof(property)}`);
+    if (!property){
+        return (<p></p>);
+    } else{
+        return (
+                <Form>
+                    <p>{property}</p>
+                    <Divider />
+                    <Button>Commit</Button>
+                </Form>
+        ); 
+    }   
 };
-
-
-    /*console.log(list)
-    const [item, setItem] = useState(new Map())
-    const updateMap = (k,v) => {
-        for (let i in list){
-            setItem(item.set(k,i));
-        }
-    }
-    useEffect (()=>{
-        updateMap()
-        console.log(item)
-    });*/
