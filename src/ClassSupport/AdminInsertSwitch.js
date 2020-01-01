@@ -1,6 +1,3 @@
-import React from 'react';
-import { Form, Divider, Button } from "semantic-ui-react";
-
 export const AdminInsertSwitch = key => {
     let current = null; //refresh and re-init current 
     switch(key){
@@ -31,21 +28,27 @@ export const AdminInsertSwitch = key => {
         default:
             break;
     }
-    console.log(`current = ${current} with type of ${typeof(current)}`);
-    AdminInsertMapper(current);
+    return current;
 }
 
-export const AdminInsertMapper = property => {
-    console.log(`hint: ${JSON.stringify(property)} with typeof ${typeof(property)}`);
-    if (!property){
+/*export const AdminInsertMapper = property => {
+    if (property === null || property.length === 0){
         return (<p></p>);
     } else{
+        let p0 = property[0];
+        let p1 = property[1];
+        let p2 = property[2];
+        let p3 = property[3];
+        let p4 = property[4];
+        console.log(`hint: ${p0} + ${p1} + ${p2} + ${p3} + ${p4} ------ with typeof ${typeof(property)}`);
         return (
-                <Form>
-                    <p>{property}</p>
-                    <Divider />
-                    <Button>Commit</Button>
-                </Form>
+                
         ); 
     }   
-};
+};被封印的诅咒，请勿开封。
+*/
+/*<Form.Input placeholder={p0} label={p0}></Form.Input>
+                    {(p1 === undefined) ? (null):(<Form.Input></Form.Input>)}
+                    {p2 ? (<Form.Input></Form.Input>): (null)}
+                    {p3 ? (<Form.Input></Form.Input>): (null)}
+                    {p4 ? (<Form.Input></Form.Input>): (null)}*/

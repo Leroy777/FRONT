@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   Form,
@@ -43,6 +43,7 @@ const SignUpForm = () => {
         } else {
             goto_field = 0
         }
+
         if (goto_field === 0){
             setProblem(goto_field)
             setCheckerMsg('')
@@ -53,12 +54,6 @@ const SignUpForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if (checkerMsg === ''){
-            console.log('do something')
-        }
-    }
-
-    useEffect(()=>{ // mostly checks error and updates checkerMsg
         if (problem !== 0){
             console.log('has issues ' + problem)
             switch(problem){
@@ -76,7 +71,10 @@ const SignUpForm = () => {
                     break
             }
         }
-    })
+        if (checkerMsg === ''){
+            console.log('do something')
+        }
+    }
 
     return(
     <Container>

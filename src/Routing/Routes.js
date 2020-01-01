@@ -13,6 +13,7 @@ import privateDashboard from '../Component/private/privateDashboard';
 import privateCart from '../Component/private/privateCart';
 import adminDashboard from '../Component/admin/adminDashboard';
 import adminInsert from '../Component/admin/adminInsert';
+import adminActions from '../Component/admin/adminActions';
 
 const Routes = () => {
     return (
@@ -26,7 +27,8 @@ const Routes = () => {
                 <Private path="/user/cart" exact component={privateCart} />
                 <Private path="/user/dashboard" exact component={privateDashboard}/>
                 <Admin path="/admin/dashboard" exact component={adminDashboard} />
-                <Admin path="/admin/insert" exact component={adminInsert}/>
+                <Admin path="/admin/insert/" exact component={adminInsert}/>
+                <Admin path="/admin/insert/:action" exact component={adminActions}/>
             </Switch>
         </BrowserRouter>
     );

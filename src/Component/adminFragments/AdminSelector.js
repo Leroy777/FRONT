@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import {Dropdown, Container, Divider, Segment, Header } from 'semantic-ui-react';
-import {AdminInsertSwitch} from '../../ClassSupport/AdminInsertSwitch';
+import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
+import {Dropdown, Container, Divider, Segment, Header, Button } from 'semantic-ui-react';
 
 const adminOptions = [
     {
@@ -45,19 +45,26 @@ const adminOptions = [
     }
 ];
 
-const AdminSelector = () =>{
+const AdminSelector = () => {
     const [sel, setSel] = useState('');
     var value = sel;
+    const [redir, setRedir] = useState(null);
+
     const handleChange = (e, {value}) => {
         setSel(value);
     };
-
-    useEffect(()=>{
-        AdminInsertSwitch(value);
-    })
+    
+    const adminRedir = () => {
+        let redirString = JSON.stringify(redir).slice(1, -1);
+        //console.log('redir string is: '+redirString);
+        if (redir !== null){
+            return <Redirect to={redirString} />
+        }
+    }
 
     return (
         <Container textAlign='center'>
+            {adminRedir()}
             <Divider clearing />
             <Header as='h1'>Admin Page</Header>
             <Segment raised style={{marginTop:'100px'}} >
@@ -76,11 +83,11 @@ const AdminSelector = () =>{
                     <Header as='h3'>{value}</Header>
                 </Segment>
                 <Segment>
-                    <p></p>
+                    <Button content='Continue' primary onClick={()=>setRedir(`/admin/insert/${value}`)}/>
                 </Segment>
             </Segment.Group>
         </Container>
     );
 };
-//{<AdminInsertMapper />}
+
 export default AdminSelector;
