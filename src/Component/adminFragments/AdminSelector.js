@@ -37,11 +37,6 @@ const adminOptions = [
         key: 'delete_promotion',
         text: 'delete promotion',
         value: 'delete_promotion'
-    },
-    {
-        key: 'order_status',
-        text: 'order status',
-        value: 'order_status'
     }
 ];
 

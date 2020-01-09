@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
 import {Redirect, Link} from 'react-router-dom';
-import {Dropdown, Container, Grid, Divider, Header, Form, Input, Button} from 'semantic-ui-react';
+import {Dropdown, Segment, Container, Grid, Divider, Header, Form, Input, Button} from 'semantic-ui-react';
 import {AdminInsertSwitch} from '../../ClassSupport/AdminInsertSwitch';
+import {AdminImgUploader} from '../../ClassSupport/APICalls/AdminImgUploader';
+import {AdminMethodSwitch} from '../../ClassSupport/AdminMethodSwitch';
+import {AdminFetchSwitch} from '../../ClassSupport/AdminFetchSwitch';
 
 const AdminActionForms = ({action}) => {
     
     const [formGroup] = useState(AdminInsertSwitch(action));
     const [inp, setInp] = useState({});
+    const [imageFile, setImageFile] = useState(null);
     const [successful, setSuccessful] = useState(false);
-    
+
     const productIDs = [
         {
             key: 'opt1',
@@ -27,11 +31,22 @@ const AdminActionForms = ({action}) => {
     const idChange = (e, {value}) => {
         setInp({...inp, product_id: value})
     }
+    const imgChange = (e) => {
+        if (e.target.files[0]){
+            setImageFile(e.target.files[0])
+            setInp({...inp, img: e.target.files[0].name})
+        }
+    }
 
     const handleSubmit = () => {
-        console.log(JSON.stringify(inp));
+        if (imageFile) {
+            AdminImgUploader(imageFile)
+        } 
+        const method = AdminMethodSwitch(action);
+        AdminFetchSwitch(method, inp, action)
         setSuccessful(true);
     }
+    
     const submissionSuccess = () => {
         if (successful === true){
             return <Redirect to='/admin/insert/' />
@@ -51,16 +66,7 @@ const AdminActionForms = ({action}) => {
                     <Form onSubmit={handleSubmit} style={{minWidth:'300px'}} id='currentForm'>
                         {submissionSuccess()}
                         {formGroup.map(item => (
-                            (item !== 'product_id') ?
-                            <Form.Field 
-                                required 
-                                key={item} 
-                                name={item}
-                                control={Input}
-                                placeholder={item}
-                                onChange={e=>handleChange(e)}
-                            >
-                            </Form.Field> : 
+                            (item === 'product_id') ?
                             <Dropdown 
                                 fluid
                                 onChange={idChange}
@@ -69,7 +75,26 @@ const AdminActionForms = ({action}) => {
                                 placeholder='select Product ID'
                                 selection
                                 value={formGroup.product_id}
-                            />
+                                required
+                            /> : 
+                            (item === 'img') ?
+                            <Segment key='img'>
+                                <input 
+                                    required
+                                    onChange={imgChange} 
+                                    type="file" 
+                                    name="image" 
+                                    accept="image/*" />
+                            </Segment> :
+                            <Form.Field 
+                                required 
+                                key={item} 
+                                name={item}
+                                control={Input}
+                                placeholder={item}
+                                onChange={e=>handleChange(e)}
+                            >
+                            </Form.Field>
                         ))}    
                         <Divider />
                         <Button fluid content='OK' type='submit' />
